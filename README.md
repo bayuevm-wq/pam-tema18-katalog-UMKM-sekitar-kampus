@@ -1,35 +1,62 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM).
+# Katalog UMKM
 
-* [/iosApp](./iosApp/iosApp) contains an iOS application. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## 📱 Deskripsi Proyek
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
+**Katalog UMKM** adalah aplikasi mobile berbasis **Kotlin Multiplatform (KMP)** yang digunakan untuk menampilkan dan mengelola informasi produk dari Usaha Mikro, Kecil, dan Menengah (UMKM).
 
-### Running the apps
+Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembangan Aplikasi Mobile**. Proyek menggunakan konsep Kotlin Multiplatform sehingga kode yang dapat digunakan bersama ditempatkan pada `commonMain`, sedangkan kode yang membutuhkan implementasi khusus platform ditempatkan pada source set masing-masing platform.
 
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
+## 🎯 Tujuan
 
-- Android app: `./gradlew :androidApp:assembleDebug`
-- Desktop app:
-  - Hot reload: `./gradlew :desktopApp:hotRun --auto`
-  - Standard run: `./gradlew :desktopApp:run`
-- iOS app: open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+- Menyediakan katalog produk UMKM dalam bentuk aplikasi mobile.
+- Menampilkan informasi produk secara terstruktur.
+- Menerapkan konsep dasar Kotlin dan Kotlin Multiplatform.
+- Memahami struktur project KMP.
+- Menerapkan konsep `commonMain` dan kode khusus platform.
+- Membiasakan penggunaan Git dan GitHub dalam pengembangan aplikasi secara berkelompok.
 
-### Running tests
+## 👥 Anggota Kelompok
 
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
+| No | Nama | NIM | Peran |
+|----|------|-----|-------|
+| 1 | **Bayu Setiawan** | **124140177** | Ketua Kelompok |
+| 2 | **Nama Anggota 2** | **NIM** | Anggota Kelompok |
+| 3 | **Nama Anggota 3** | **NIM** | Anggota Kelompok |
 
-- Android tests: `./gradlew :shared:testAndroidHostTest`
-- Desktop tests: `./gradlew :shared:jvmTest`
-- iOS tests: `./gradlew :shared:iosSimulatorArm64Test`
+## 📚 Mata Kuliah
 
----
+**Pengembangan Aplikasi Mobile**
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+**Program Studi:** Teknik Informatika  
+**Institusi:** Institut Teknologi Sumatera (ITERA)  
+**Tahun:** 2026
+
+## 🛠️ Teknologi yang Digunakan
+
+- Kotlin
+- Kotlin Multiplatform (KMP)
+- Compose Multiplatform
+- Android Studio
+- Gradle
+- Git
+- GitHub
+
+## 🏗️ Struktur Project
+
+```text
+katalog-umkm/
+├── composeApp/
+│   └── src/
+│       ├── commonMain/
+│       │   └── kotlin/
+│       ├── androidMain/
+│       │   └── kotlin/
+│       ├── iosMain/
+│       │   └── kotlin/
+│       └── desktopMain/
+│           └── kotlin/
+├── gradle/
+│   └── libs.versions.toml
+├── build.gradle.kts
+└── settings.gradle.kts
+```
