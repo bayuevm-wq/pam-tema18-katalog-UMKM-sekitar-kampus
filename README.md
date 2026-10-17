@@ -23,6 +23,18 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 | 2 | **Arbani Hafizh Saragih** | **124140139** | Anggota Kelompok |
 | 3 | **Natan Handani** | **124140175** | Anggota Kelompok |
 
+## 📌 Checkpoint Minggu 1
+
+| No | Yang diselesaikan | Status |
+|----|-------------------|--------|
+| 1 | Proyek KMP kelompok dibuat dari template Compose Multiplatform dan di-push ke repository kelompok | Selesai |
+| 2 | Judul aplikasi diganti dengan nama tema, dan nama platform ikut tampil memakai expect dan actual | Selesai |
+| 3 | Setiap anggota punya satu commit, misalnya menambahkan nama dan NIM di layar Tentang | Selesai |
+
+### 📸 Screenshot Aplikasi
+
+![Screenshot Checkpoint 1](docs/screenshot-checkpoint-1.png)
+
 ## 📚 Mata Kuliah
 
 **Pengembangan Aplikasi Mobile**
