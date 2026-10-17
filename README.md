@@ -20,7 +20,7 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 | No | Nama | NIM | Peran |
 |----|------|-----|-------|
 | 1 | **Bayu Setiawan** | **124140177** | Ketua Kelompok |
-| 2 | **Nama Anggota 2** | **NIM** | Anggota Kelompok |
+| 2 | **Arbani Hafizh Saragih** | **124140139** | Anggota Kelompok |
 | 3 | **Nama Anggota 3** | **NIM** | Anggota Kelompok |
 
 ## 📚 Mata Kuliah
