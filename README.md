@@ -45,7 +45,8 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 
 ### keluaran konsol
 
-![Screenshot Checkpoint 2](docs/screenshot-checkpoint-2.png)
+<img width="1600" height="909" alt="keluaran konsol" src="https://github.com/user-attachments/assets/2fa4f332-008c-4db9-9d8b-cdaa7b36cbfe" />
+
 
 
 ##  Mata Kuliah
