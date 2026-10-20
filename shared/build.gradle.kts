@@ -55,6 +55,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -64,4 +65,12 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+}
+
+tasks.register<JavaExec>("runDemo") {
+    group = "application"
+    mainClass.set("id.ac.itera.katalogumkm.DemoCheckpoint2Kt")
+    val compilation = (kotlin.targets.getByName("jvm") as org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget)
+        .compilations.getByName("main")
+    classpath(compilation.output.allOutputs, compilation.runtimeDependencyFiles)
 }
