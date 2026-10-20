@@ -35,6 +35,19 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 
 ![Screenshot Checkpoint 1](docs/screenshot-checkpoint-1.png)
 
+## Checkpoint Minggu 2
+
+| No | Yang diselesaikan | Dikerjakan oleh | Status |
+|----|-------------------|-----------------|--------|
+| 1 | Model data: Produk, Umkm, sealed class StatusProduk di commonMain/model | Bayu | Selesai |
+| 2 | Sumber data palsu: interface Sumber, SumberProdukPalsu (delay + Flow status) | Arbani | Selesai |
+| 3 | Bukti berjalan: DemoCheckpoint2.kt di jvmMain | Natan | Selesai |
+
+### keluaran konsol
+
+![Screenshot Checkpoint 2](docs/screenshot-checkpoint-2.png)
+
+
 ##  Mata Kuliah
 
 **Pengembangan Aplikasi Mobile**
@@ -57,16 +70,27 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 
 ```text
 katalog-umkm/
-├── composeApp/
+├── shared/
 │   └── src/
 │       ├── commonMain/
-│       │   └── kotlin/
+│       │   └── kotlin/id/ac/itera/katalogumkm/
+│       │       ├── model/
+│       │       │   ├── Produk.kt
+│       │       │   ├── Umkm.kt
+│       │       │   ├── StatusProduk.kt
+│       │       │   └── ProdukExt.kt
+│       │       └── data/
+│       │           ├── Sumber.kt
+│       │           ├── SumberProdukPalsu.kt
+│       │           └── SumberUmkmPalsu.kt
+│       ├── jvmMain/
+│       │   └── kotlin/id/ac/itera/katalogumkm/
+│       │       └── DemoCheckpoint2.kt
 │       ├── androidMain/
-│       │   └── kotlin/
-│       ├── iosMain/
-│       │   └── kotlin/
-│       └── desktopMain/
-│           └── kotlin/
+│       └── iosMain/
+├── androidApp/
+├── desktopApp/
+├── iosApp/
 ├── gradle/
 │   └── libs.versions.toml
 ├── build.gradle.kts
