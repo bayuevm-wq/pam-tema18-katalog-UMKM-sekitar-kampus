@@ -47,6 +47,18 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 
 <img width="1600" height="909" alt="keluaran konsol" src="https://github.com/user-attachments/assets/2fa4f332-008c-4db9-9d8b-cdaa7b36cbfe" />
 
+## Checkpoint Minggu 3
+
+| No | Yang diselesaikan | Dikerjakan oleh | Status |
+|---|---|---|---|
+| 1 | Data contoh 12 produk (DataContoh.kt), LazyColumn DaftarProduk | Arbani | Selesai |
+| 2 | Komponen KartuProduk dan LabelStatus | Bayu | Selesai |
+| 3 | LayarKatalog: urutan Tersedia + termurah, FAB Tambah Produk, App.kt, README | Natan | Selesai |
+
+### Tangkapan layar
+
+![Layar katalog Checkpoint 3](docs/screenshot-checkpoint-3.png)
+
 
 
 ##  Mata Kuliah
