@@ -17,7 +17,11 @@ import id.ac.itera.katalogumkm.model.StatusProduk
 import id.ac.itera.katalogumkm.model.Umkm
 
 @Composable
-fun LayarKatalog(semua: List<Produk>, umkm: List<Umkm>) {
+fun LayarKatalog(
+    semua: List<Produk>,
+    umkm: List<Umkm>,
+    onTambah: () -> Unit = {}
+) {
     val urut = semua.sortedWith(
         compareBy<Produk>({ it.status !is StatusProduk.Tersedia }, { it.harga })
     )
@@ -25,7 +29,7 @@ fun LayarKatalog(semua: List<Produk>, umkm: List<Umkm>) {
 
     Scaffold(
         floatingActionButton = {
-            ExtendedFloatingActionButton(onClick = { /* belum berfungsi, minggu depan */ }) {
+            ExtendedFloatingActionButton(onClick = onTambah) {
                 Text("+ Tambah Produk")
             }
         }
