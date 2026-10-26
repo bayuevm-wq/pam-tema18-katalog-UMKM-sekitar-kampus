@@ -59,7 +59,19 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 
 ![Layar katalog Checkpoint 3](docs/screenshot-checkpoint-3.png)
 
+## Checkpoint Minggu 4
 
+| No | Yang diselesaikan | Dikerjakan oleh | Status |
+|----|-------------------|-----------------|--------|
+| 1 | FormProdukUiState (bisaSimpan dihitung) dan FormProdukViewModel (StateFlow, validasi) | Bayu | Selesai |
+| 2 | Layar FormProdukScreen dan KolomTeks tanpa state | Natan | Selesai |
+| 3 | PenyimpananProduk (MutableStateFlow), FAB onTambah, App.kt membaca daftar | Arbani | Selesai |
+
+### Tangkapan layar
+
+| Form tambah produk | Katalog setelah produk ditambah |
+|---|---|
+| ![Form](docs/screenshot-checkpoint-4-form.png) | ![Daftar](docs/screenshot-checkpoint-4-daftar.png) |
 
 ##  Mata Kuliah
 
