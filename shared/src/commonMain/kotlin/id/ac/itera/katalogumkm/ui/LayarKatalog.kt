@@ -20,7 +20,8 @@ import id.ac.itera.katalogumkm.model.Umkm
 fun LayarKatalog(
     semua: List<Produk>,
     umkm: List<Umkm>,
-    onTambah: () -> Unit = {}
+    onTambah: () -> Unit = {},
+    onPilih: (Int) -> Unit = {}
 ) {
     val urut = semua.sortedWith(
         compareBy<Produk>({ it.status !is StatusProduk.Tersedia }, { it.harga })
@@ -49,7 +50,9 @@ fun LayarKatalog(
             DaftarProduk(
                 semua = urut,
                 umkm = umkm,
-                onPilih = { println("Dipilih: ${it.nama}") }
+                onPilih = { produk ->
+                    onPilih(produk.id)
+                }
             )
         }
     }
