@@ -1,17 +1,29 @@
 package id.ac.itera.katalogumkm
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
@@ -47,12 +59,35 @@ fun App() {
                     // Tahu layar mana yang aktif, supaya tab yang benar tampil terpilih
                     val entry by nav.currentBackStackEntryAsState()
                     TAB.forEach { tab ->
-                        NavigationBarItem(
-                            selected = entry?.destination?.hasRoute(tab.rute::class) == true,
-                            onClick = { pindahTab(nav, tab.rute) },
-                            icon = { Text(tab.simbol) },
-                            label = { Text(tab.label) }
-                        )
+                        val aktif = entry?.destination?.hasRoute(tab.rute::class) == true
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(80.dp)
+                                .clickable { pindahTab(nav, tab.rute) },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(
+                                    text = tab.label,
+                                    fontSize = 16.sp,
+                                    fontWeight = if (aktif) FontWeight.Bold else FontWeight.Medium,
+                                    color = if (aktif) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(Modifier.height(6.dp))
+                                // Garis penanda tab aktif
+                                Box(
+                                    modifier = Modifier
+                                        .width(28.dp)
+                                        .height(3.dp)
+                                        .background(
+                                            if (aktif) MaterialTheme.colorScheme.primary else Color.Transparent,
+                                            RoundedCornerShape(50)
+                                        )
+                                )
+                            }
+                        }
                     }
                 }
             }

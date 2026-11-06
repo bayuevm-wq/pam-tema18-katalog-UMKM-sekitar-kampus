@@ -73,6 +73,46 @@ Aplikasi ini dikembangkan sebagai proyek kelompok pada mata kuliah **Pengembanga
 |---|---|
 | ![Form](docs/screenshot-checkpoint-4-form.png) | ![Daftar](docs/screenshot-checkpoint-4-daftar.png) |
 
+## Checkpoint Minggu 5
+
+| No | Yang diselesaikan | Dikerjakan oleh | Status |
+|----|-------------------|-----------------|--------|
+| 1 | Dependency navigation, Rute.kt, Tab.kt, PindahTab.kt, App.kt (NavHost + menu bawah) | Bayu | Selesai |
+| 2 | DetailViewModel (DetailUiState) dan LayarDetail, onPilih di LayarKatalog | Arbani | Selesai |
+| 3 | LayarAsisten, LayarProfil, onTersimpan di form, peta navigasi dan screenshot | Natan | Selesai |
+
+### Peta navigasi
+
+```mermaid
+flowchart LR
+    subgraph Tab[Menu bawah]
+        K[RuteKatalog<br/>Daftar produk]
+        A[RuteAsisten<br/>Fitur AI]
+        P[RuteProfil<br/>Profil]
+    end
+    K -- "ketuk kartu: id produk" --> D["RuteDetail(id)<br/>Detail produk"]
+    K -- "FAB + Tambah Produk" --> F[RuteForm<br/>Tambah produk]
+    F -- "tersimpan / kembali" --> K
+    D -- "kembali" --> K
+    K <-. "pindahTab" .-> A
+    K <-. "pindahTab" .-> P
+    A <-. "pindahTab" .-> P
+```
+
+| Rute | Layar | Membawa data |
+|---|---|---|
+| RuteKatalog | Daftar produk | - |
+| RuteDetail(id) | Detail produk + UMKM | `id: Int` |
+| RuteForm | Tambah produk | - |
+| RuteAsisten | Fitur AI (Modul 9) | - |
+| RuteProfil | Profil tim | - |
+
+### Tangkapan layar
+
+| Katalog | Detail | Form | Asisten | Profil |
+|---|---|---|---|---|
+| ![Katalog](docs/cp5-katalog.png) | ![Detail](docs/cp5-detail.png) | ![Form](docs/cp5-form.png) | ![Asisten](docs/cp5-asisten.png) | ![Profil](docs/cp5-profil.png) |
+
 ##  Mata Kuliah
 
 **Pengembangan Aplikasi Mobile**
