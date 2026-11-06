@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -14,6 +13,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,14 +31,18 @@ private val pilihanKategori = listOf("Makanan", "Minuman", "Jasa")
 fun FormProdukScreen(
     umkm: List<Umkm>,
     onKembali: () -> Unit,
+    onTersimpan: () -> Unit,
     vm: FormProdukViewModel = viewModel { FormProdukViewModel() }
 ) {
     val state by vm.uiState.collectAsState()
 
+    LaunchedEffect(state.pesan) {
+        if (state.pesan != null) onTersimpan()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
