@@ -1,0 +1,182 @@
+{
+  "produk": [
+    {
+      "id": 1,
+      "nama": "Keripik Pisang Coklat",
+      "harga": 15000,
+      "kategori": "Makanan",
+      "umkmId": 1,
+      "deskripsi": "Keripik pisang renyah berlumur coklat",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 10,
+      "estimasiHari": 0
+    },
+    {
+      "id": 2,
+      "nama": "Es Kopi Susu Gula Aren",
+      "harga": 12000,
+      "kategori": "Minuman",
+      "umkmId": 2,
+      "deskripsi": "Kopi susu dingin, gula aren asli",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 25,
+      "estimasiHari": 0
+    },
+    {
+      "id": 3,
+      "nama": "Jasa Print dan Jilid",
+      "harga": 5000,
+      "kategori": "Jasa",
+      "umkmId": 3,
+      "deskripsi": "Print A4 dan jilid lakban",
+      "fotoUrl": null,
+      "status": "PreOrder",
+      "stok": 0,
+      "estimasiHari": 1
+    },
+    {
+      "id": 4,
+      "nama": "Nasi Ayam Geprek",
+      "harga": 13000,
+      "kategori": "Makanan",
+      "umkmId": 4,
+      "deskripsi": "Ayam geprek sambal bawang, level 1-5",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 8,
+      "estimasiHari": 0
+    },
+    {
+      "id": 5,
+      "nama": "Es Teh Jumbo",
+      "harga": 5000,
+      "kategori": "Minuman",
+      "umkmId": 1,
+      "deskripsi": "Es teh manis gelas besar",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 40,
+      "estimasiHari": 0
+    },
+    {
+      "id": 6,
+      "nama": "Risol Mayo",
+      "harga": 3000,
+      "kategori": "Makanan",
+      "umkmId": 4,
+      "deskripsi": "Risol isi mayo, telur, dan sosis",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 12,
+      "estimasiHari": 0
+    },
+    {
+      "id": 7,
+      "nama": "Matcha Latte",
+      "harga": 15000,
+      "kategori": "Minuman",
+      "umkmId": 2,
+      "deskripsi": "Matcha susu dingin",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 6,
+      "estimasiHari": 0
+    },
+    {
+      "id": 8,
+      "nama": "Fotokopi per Lembar",
+      "harga": 300,
+      "kategori": "Jasa",
+      "umkmId": 3,
+      "deskripsi": "Fotokopi hitam putih A4/F4",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 500,
+      "estimasiHari": 0
+    },
+    {
+      "id": 9,
+      "nama": "Kue Kering Nastar",
+      "harga": 35000,
+      "kategori": "Makanan",
+      "umkmId": 4,
+      "deskripsi": "Nastar selai nanas, toples 250 gram",
+      "fotoUrl": null,
+      "status": "PreOrder",
+      "stok": 0,
+      "estimasiHari": 3
+    },
+    {
+      "id": 10,
+      "nama": "Mie Goreng Telur",
+      "harga": 10000,
+      "kategori": "Makanan",
+      "umkmId": 1,
+      "deskripsi": "Mie goreng dengan telur ceplok",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 12,
+      "estimasiHari": 0
+    },
+    {
+      "id": 11,
+      "nama": "Laminating Kartu",
+      "harga": 3000,
+      "kategori": "Jasa",
+      "umkmId": 3,
+      "deskripsi": "Laminating KTM atau kartu ukuran kecil",
+      "fotoUrl": null,
+      "status": "Habis",
+      "stok": 0,
+      "estimasiHari": 0
+    },
+    {
+      "id": 12,
+      "nama": "Kopi Hitam Tubruk",
+      "harga": 6000,
+      "kategori": "Minuman",
+      "umkmId": 2,
+      "deskripsi": "Kopi robusta Lampung",
+      "fotoUrl": null,
+      "status": "Tersedia",
+      "stok": 20,
+      "estimasiHari": 0
+    }
+  ],
+  "umkm": [
+    {
+      "id": 1,
+      "nama": "Warung Bu Sari",
+      "pemilik": "Sari",
+      "lokasi": "Depan gerbang utama kampus",
+      "jamBuka": "07.00-21.00",
+      "noWhatsapp": null
+    },
+    {
+      "id": 2,
+      "nama": "Kopi Kampus",
+      "pemilik": "Dimas",
+      "lokasi": "Samping asrama mahasiswa",
+      "jamBuka": "09.00-23.00",
+      "noWhatsapp": null
+    },
+    {
+      "id": 3,
+      "nama": "Fotocopy Berkah",
+      "pemilik": "Rahmat",
+      "lokasi": "Dekat gedung kuliah umum",
+      "jamBuka": "08.00-20.00",
+      "noWhatsapp": null
+    },
+    {
+      "id": 4,
+      "nama": "Dapur Mama Rina",
+      "pemilik": "Rina",
+      "lokasi": "Jalan masuk kos-kosan",
+      "jamBuka": "10.00-20.00",
+      "noWhatsapp": null
+    }
+  ]
+}
