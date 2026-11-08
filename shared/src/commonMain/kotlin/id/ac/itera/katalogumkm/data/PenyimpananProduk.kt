@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+
 object PenyimpananProduk {
 
     private val _daftar = MutableStateFlow(contohProduk)
@@ -20,25 +21,11 @@ object PenyimpananProduk {
         kategori: String,
         umkmId: Int,
         deskripsi: String
-    ) = _daftar.update { lama ->
-
-        val idBaru = (lama.maxOfOrNull { it.id } ?: 0) + 1
-
-        val status = if (stok > 0) {
-            StatusProduk.Tersedia(stok)
-        } else {
-            StatusProduk.Habis
-        }
-
-        lama + Produk(
-            idBaru,
-            nama,
-            harga,
-            kategori,
-            umkmId,
-            deskripsi,
-            null,
-            status
-        )
+    ): Produk {
+        val idBaru = (_daftar.value.maxOfOrNull { it.id } ?: 0) + 1
+        val status = if (stok > 0) StatusProduk.Tersedia(stok) else StatusProduk.Habis
+        val baru = Produk(idBaru, nama, harga, kategori, umkmId, deskripsi, null, status)
+        _daftar.update { lama -> lama + baru }
+        return baru
     }
 }

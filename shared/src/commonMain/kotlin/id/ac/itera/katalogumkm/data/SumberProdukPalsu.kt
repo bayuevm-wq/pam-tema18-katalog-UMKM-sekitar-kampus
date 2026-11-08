@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 
 class SumberProdukPalsu : Sumber<Produk> {
 
-    private val daftar = listOf(
+    private val daftar = mutableListOf(
         Produk(1, "Keripik Pisang Coklat", 15000, "Makanan", 1,
             "Keripik pisang renyah dengan lumuran coklat", null, StatusProduk.Tersedia(10)),
         Produk(2, "Es Kopi Susu Gula Aren", 12000, "Minuman", 2,
@@ -33,4 +33,14 @@ class SumberProdukPalsu : Sumber<Produk> {
         delay(2000)
         emit(awal.copy(status = StatusProduk.PreOrder(2)))
     }
+
+    override suspend fun semua(): List<Produk> {
+        return daftar
+    }
+
+    override suspend fun kirim(baru: Produk): Produk {
+        daftar.add(baru)
+        return baru
+    }
+
 }
