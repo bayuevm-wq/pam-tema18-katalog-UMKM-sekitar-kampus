@@ -7,10 +7,10 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 // Alamat API kelompok, TANPA garis miring di akhir. Cukup ubah di sini kalau server pindah.
+// Pilihan B (mockapi.io) dipakai karena my-json-server sedang tidak bisa dijangkau:
+const val BASE_URL = "https://6af0821911a6aa866e7f89f0.mockapi.io/api/v1"
 // Pilihan A (my-json-server, membaca db.json dari repo GitHub ini):
-const val BASE_URL = "https://my-json-server.typicode.com/bayuevm-wq/pam-tema18-katalog-UMKM-sekitar-kampus"
-// Pilihan B (mockapi.io, buat proyek sendiri lalu tempel alamatnya), contoh:
-// const val BASE_URL = "https://xxxxxxxx.mockapi.io/api/v1"
+// const val BASE_URL = "https://my-json-server.typicode.com/bayuevm-wq/pam-tema18-katalog-UMKM-sekitar-kampus"
 
 // Dibuat SATU kali untuk seluruh aplikasi (dipanggil dari App.kt)
 fun buatClient() = HttpClient {
