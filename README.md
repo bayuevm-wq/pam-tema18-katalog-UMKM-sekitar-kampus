@@ -113,6 +113,39 @@ flowchart LR
 |---|---|---|---|---|
 | ![Katalog](docs/cp5-katalog.png) | ![Detail](docs/cp5-detail.png) | ![Form](docs/cp5-form.png) | ![Asisten](docs/cp5-asisten.png) | ![Profil](docs/cp5-profil.png) |
 
+```markdown
+## Checkpoint Minggu 6
+
+### API yang dipakai
+
+Mock API buatan sendiri dengan \*\*my-json-server\*\*, membaca `db.json` di root repo ini.
+
+- Base URL: `https://my-json-server.typicode.com/bayuevm-wq/pam-tema18-katalog-UMKM-sekitar-kampus`
+- Disimpan di satu konstanta `BASE\_URL` (`data/Jaringan.kt`)
+
+| Method | Endpoint | Kegunaan |
+|---|---|---|
+| GET | `/produk` | Daftar produk (layar Katalog) |
+| GET | `/produk/{id}` | Satu produk (layar Detail) |
+| POST | `/produk` | Tambah produk (layar Form) |
+
+Catatan: POST di my-json-server hanya disimulasikan (tidak tersimpan permanen), jadi produk baru diingat di memori selama aplikasi terbuka.
+
+| No | Yang diselesaikan | Dikerjakan oleh | Status |
+|----|-------------------|-----------------|--------|
+| 1 | db.json, dependency Ktor, ProdukDto, ProdukApi, Jaringan.kt | Bayu | Selesai |
+| 2 | Sumber (semua/kirim), SumberProdukJaringan, sumber palsu ikut interface baru | Arbani | Selesai |
+| 3 | KatalogUiState, KatalogViewModel, KatalogScreen, Detail/Form lewat sumber, App.kt | Natan | Selesai |
+
+### Tangkapan layar
+
+| Memuat | Gagal (mode pesawat) | Berhasil |
+|---|---|---|
+| !\[Memuat](docs/cp6-memuat.png) | !\[Gagal](docs/cp6-gagal.png) | !\[Berhasil](docs/cp6-berhasil.png) |
+
+```
+
+
 ##  Mata Kuliah
 
 **Pengembangan Aplikasi Mobile**
