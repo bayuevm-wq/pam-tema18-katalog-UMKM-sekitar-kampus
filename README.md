@@ -113,7 +113,7 @@ flowchart LR
 |---|---|---|---|---|
 | ![Katalog](docs/cp5-katalog.png) | ![Detail](docs/cp5-detail.png) | ![Form](docs/cp5-form.png) | ![Asisten](docs/cp5-asisten.png) | ![Profil](docs/cp5-profil.png) |
 
-```markdown
+
 ## Checkpoint Minggu 6
 
 ### API yang dipakai
@@ -141,9 +141,9 @@ Catatan: POST di my-json-server hanya disimulasikan (tidak tersimpan permanen), 
 
 | Memuat | Gagal (mode pesawat) | Berhasil |
 |---|---|---|
-| !\[Memuat](docs/cp6-memuat.png) | !\[Gagal](docs/cp6-gagal.png) | !\[Berhasil](docs/cp6-berhasil.png) |
+| ![Memuat](docs/cp6-memuat.jpeg) | ![Gagal](docs/cp6-gagal.jpeg) | ![Berhasil](docs/cp6-berhasil.jpeg) |
 
-```
+
 
 
 ##  Mata Kuliah
