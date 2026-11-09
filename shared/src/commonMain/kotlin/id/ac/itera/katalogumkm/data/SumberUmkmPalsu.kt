@@ -7,10 +7,14 @@ import kotlinx.coroutines.flow.flow
 
 class SumberUmkmPalsu : Sumber<Umkm> {
     private val daftar = listOf(
-        Umkm(1, "Warung Bu Sari", "Sari", "Depan gerbang utama kampus", "07.00-21.00", null),
-        Umkm(2, "Kopi Kampus", "Dimas", "Samping asrama mahasiswa", "09.00-23.00", null),
-        Umkm(3, "Fotocopy Berkah", "Rahmat", "Dekat gedung kuliah umum", "08.00-20.00", null),
+        Umkm(id = 1, nama = "Warung Bu Sari", pemilik = "Sari", lokasi = "Depan gerbang utama kampus", jamBuka = "07.00-21.00", noWhatsapp = null),
+        Umkm(id = 2, nama = "Kopi Kampus", pemilik = "Dimas", lokasi = "Samping asrama mahasiswa", jamBuka = "09.00-23.00", noWhatsapp = null),
+        Umkm(id = 3, nama = "Fotocopy Berkah", pemilik = "Rahmat", lokasi = "Dekat gedung kuliah umum", jamBuka = "08.00-20.00", noWhatsapp = null)
     )
+
+    override suspend fun semua(): List<Umkm> = daftar
+
+    override suspend fun kirim(baru: Umkm): Umkm = baru
 
     override suspend fun ambil(id: Int): Umkm {
         delay(800)
