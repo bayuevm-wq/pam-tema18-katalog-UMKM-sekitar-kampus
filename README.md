@@ -141,7 +141,7 @@ Catatan: POST di my-json-server hanya disimulasikan (tidak tersimpan permanen), 
 
 | Memuat | Gagal (mode pesawat) | Berhasil |
 |---|---|---|
-| ![Memuat](docs/cp6-memuat.jpeg) | ![Gagal](docs/cp6-gagal.jpeg) | ![Berhasil](docs/cp6-berhasil.jpeg) |
+| ![Memuat](docs/cp6-memuat.png) | ![Gagal](docs/cp6-gagal.png) | ![Berhasil](docs/cp6-berhasil.png) |
 
 
 
