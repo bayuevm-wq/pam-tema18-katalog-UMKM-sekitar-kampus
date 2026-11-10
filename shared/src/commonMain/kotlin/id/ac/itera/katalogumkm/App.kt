@@ -46,8 +46,10 @@ import id.ac.itera.katalogumkm.ui.LayarProfil
 @Preview
 fun App() {
     MaterialTheme {
-        // Inisialisasi sumber jaringan & KatalogViewModel tugas Natan
+        // PERUBAHAN 1: Inisialisasi Sumber jaringan (Ktor Client API) 1 kali untuk dipakai bersama di seluruh aplikasi
         val sumber: Sumber<Produk> = remember { SumberProdukJaringan(ProdukApi(buatClient())) }
+
+        // PERUBAHAN 2: Inisialisasi KatalogViewModel di root App agar instance-nya sama saat dipanggil refresh
         val katalogVm = viewModel { KatalogViewModel(sumber) }
 
         val nav = rememberNavController()
@@ -72,6 +74,7 @@ fun App() {
                 startDestination = RuteKatalog,
                 modifier = Modifier.padding(padding).consumeWindowInsets(padding)
             ) {
+                // Rute 1: Katalog Screen (Tugas Natan)
                 composable<RuteKatalog> {
                     KatalogScreen(
                         vm = katalogVm,
@@ -80,26 +83,32 @@ fun App() {
                         onPilih = { id -> nav.navigate(RuteDetail(id)) }
                     )
                 }
+
+                // Rute 2: Detail Screen (Mengirimkan `sumber` & `cobaLagi` ke DetailViewModel & LayarDetail)
                 composable<RuteDetail> { entry ->
                     val id = entry.toRoute<RuteDetail>().id
-                    val vm = viewModel { DetailViewModel(id) }
+                    val vm = viewModel { DetailViewModel(id, sumber) }
                     val state by vm.uiState.collectAsState()
                     LayarDetail(
                         state = state,
-                        kembali = { nav.popBackStack() }
+                        kembali = { nav.popBackStack() },
+                        cobaLagi = vm::muat
                     )
                 }
+
+                // Rute 3: Form Screen (Mengirimkan `sumber` ke FormProdukViewModel & memicu `katalogVm.muat()` saat tersimpan)
                 composable<RuteForm> {
                     FormProdukScreen(
                         umkm = contohUmkm,
                         onKembali = { nav.popBackStack() },
                         onTersimpan = {
-                            katalogVm.muat()
+                            katalogVm.muat() // Otomatis refresh daftar katalog agar produk baru dari REST API langsung tampil
                             nav.popBackStack()
                         },
-                        vm = viewModel { FormProdukViewModel() }
+                        vm = viewModel { FormProdukViewModel(sumber) }
                     )
                 }
+
                 composable<RuteAsisten> { LayarAsisten() }
                 composable<RuteProfil> { LayarProfil() }
             }

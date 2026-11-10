@@ -3,13 +3,14 @@ package id.ac.itera.katalogumkm.ui
 // Semua yang dibutuhkan layar form, dalam satu data class.
 data class FormProdukUiState(
     val nama: String = "",
-    val harga: String = "",           // String karena berasal dari TextField
+    val harga: String = "", // String karena berasal dari TextField
     val stok: String = "",
     val kategori: String = "Makanan",
     val umkmId: Int = 1,
     val deskripsi: String = "",
     val sedangMenyimpan: Boolean = false,
-    val pesan: String? = null         // hanya ada setelah produk tersimpan
+    val pesan: String? = null, // Berisi pesan berhasil ATAU pesan gagal dari server
+    val tersimpan: Boolean = false // BARU (Checkpoint 6): Bernilai true HANYA jika server berhasil menyimpan data (HTTP POST 201)
 ) {
     // Nilai turunan: dihitung, tidak disimpan (state seminimal mungkin)
     val hargaAngka: Long? get() = harga.toLongOrNull()

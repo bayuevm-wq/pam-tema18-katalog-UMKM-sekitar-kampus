@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -22,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import id.ac.itera.katalogumkm.model.Umkm
 
 private val pilihanKategori = listOf("Makanan", "Minuman", "Jasa")
@@ -32,12 +32,14 @@ fun FormProdukScreen(
     umkm: List<Umkm>,
     onKembali: () -> Unit,
     onTersimpan: () -> Unit,
-    vm: FormProdukViewModel = viewModel { FormProdukViewModel() }
+    vm: FormProdukViewModel // PERUBAHAN 1: Menghapus nilai default "= viewModel { ... }" karena vm di-inject dari App.kt membawa Sumber jaringan
 ) {
     val state by vm.uiState.collectAsState()
 
-    LaunchedEffect(state.pesan) {
-        if (state.pesan != null) onTersimpan()
+    // PERUBAHAN 2 (Checkpoint 6): Menggunakan key `state.tersimpan`, BUKAN `state.pesan`.
+    // Tujuannya agar jika terjadi kesalahan jaringan (misal offline), layar form TIDAK otomatis tertutup.
+    LaunchedEffect(state.tersimpan) {
+        if (state.tersimpan) onTersimpan()
     }
 
     Column(
@@ -96,6 +98,12 @@ fun FormProdukScreen(
             Text(if (state.sedangMenyimpan) "Menyimpan..." else "Simpan")
         }
 
-        state.pesan?.let { Text(it, color = Color(0xFF2E6B2E)) }
+        // PERUBAHAN 3 (Checkpoint 6): Jika tersimpan maka warna hijau, jika error (misal offline) warna merah error
+        state.pesan?.let { pesan ->
+            Text(
+                text = pesan,
+                color = if (state.tersimpan) Color(0xFF2E6B2E) else MaterialTheme.colorScheme.error
+            )
+        }
     }
 }

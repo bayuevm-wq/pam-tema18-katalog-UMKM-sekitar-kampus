@@ -1,4 +1,3 @@
-
 package id.ac.itera.katalogumkm.ui
 
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +19,11 @@ import androidx.compose.ui.unit.sp
 import id.ac.itera.katalogumkm.model.label
 
 @Composable
-fun LayarDetail(state: DetailUiState, kembali: () -> Unit) {
-
+fun LayarDetail(
+    state: DetailUiState,
+    kembali: () -> Unit,
+    cobaLagi: () -> Unit // BARU: Ditambahkan agar tombol "Coba Lagi" bisa memicu muat ulang data
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,6 +40,10 @@ fun LayarDetail(state: DetailUiState, kembali: () -> Unit) {
 
             DetailUiState.TidakDitemukan ->
                 Text("Produk tidak ditemukan")
+
+            // BARU (Checkpoint 6): Penanganan kondisi saat gagal mengambil data dari server (offline/error)
+            is DetailUiState.Gagal ->
+                PesanGagal(pesan = state.pesan, onCobaLagi = cobaLagi)
 
             is DetailUiState.Ada -> {
                 val p = state.produk
