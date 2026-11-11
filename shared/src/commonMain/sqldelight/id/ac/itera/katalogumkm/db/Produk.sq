@@ -1,0 +1,28 @@
+-- Tabel produk di HP. Kolomnya sama dengan JSON di mockapi (ProdukDto).
+-- id = id dari server, jadi TANPA AUTOINCREMENT.
+CREATE TABLE ProdukEntity (
+  id INTEGER NOT NULL PRIMARY KEY,
+  nama TEXT NOT NULL,
+  harga INTEGER NOT NULL,
+  kategori TEXT NOT NULL,
+  umkmId INTEGER NOT NULL,
+  deskripsi TEXT NOT NULL,
+  fotoUrl TEXT,
+  status TEXT NOT NULL,
+  stok INTEGER NOT NULL,
+  estimasiHari INTEGER NOT NULL
+);
+
+semua:
+SELECT * FROM ProdukEntity
+ORDER BY id;
+
+byId:
+SELECT * FROM ProdukEntity WHERE id = ?;
+
+simpan:
+INSERT OR REPLACE INTO ProdukEntity
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+hapusSemua:
+DELETE FROM ProdukEntity;

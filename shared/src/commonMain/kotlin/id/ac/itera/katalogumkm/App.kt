@@ -12,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
@@ -20,12 +19,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import id.ac.itera.katalogumkm.data.DriverFactory
+import id.ac.itera.katalogumkm.data.PenyimpananDraf
 import id.ac.itera.katalogumkm.data.ProdukApi
-import id.ac.itera.katalogumkm.data.Sumber
-import id.ac.itera.katalogumkm.data.SumberProdukJaringan
+import id.ac.itera.katalogumkm.data.SumberProdukOffline
 import id.ac.itera.katalogumkm.data.buatClient
 import id.ac.itera.katalogumkm.data.contohUmkm
-import id.ac.itera.katalogumkm.model.Produk
+import id.ac.itera.katalogumkm.db.KatalogDb
 import id.ac.itera.katalogumkm.nav.RuteAsisten
 import id.ac.itera.katalogumkm.nav.RuteDetail
 import id.ac.itera.katalogumkm.nav.RuteForm
@@ -42,14 +42,17 @@ import id.ac.itera.katalogumkm.ui.LayarAsisten
 import id.ac.itera.katalogumkm.ui.LayarDetail
 import id.ac.itera.katalogumkm.ui.LayarProfil
 
+// Checkpoint 7: App menerima DriverFactory dari tiap platform (MainActivity, main.kt desktop, iOS)
 @Composable
-@Preview
-fun App() {
+fun App(driverFactory: DriverFactory) {
     MaterialTheme {
-        // PERUBAHAN 1: Inisialisasi Sumber jaringan (Ktor Client API) 1 kali untuk dipakai bersama di seluruh aplikasi
-        val sumber: Sumber<Produk> = remember { SumberProdukJaringan(ProdukApi(buatClient())) }
+        // Database dibuat SATU kali untuk seluruh aplikasi, sama seperti HttpClient
+        val db = remember { KatalogDb(driverFactory.createDriver()) }
 
-        // PERUBAHAN 2: Inisialisasi KatalogViewModel di root App agar instance-nya sama saat dipanggil refresh
+        // Sumber offline-first: layar membaca database, jaringan hanya menyegarkan
+        val sumber = remember { SumberProdukOffline(db, ProdukApi(buatClient())) }
+        val draf = remember { PenyimpananDraf(db) }
+
         val katalogVm = viewModel { KatalogViewModel(sumber) }
 
         val nav = rememberNavController()
@@ -95,16 +98,15 @@ fun App() {
                     )
                 }
 
-                // Rute 3: Form Screen (Mengirimkan `sumber` ke FormProdukViewModel & memicu `katalogVm.muat()` saat tersimpan)
+                // Rute 3: Form Screen
                 composable<RuteForm> {
                     FormProdukScreen(
                         umkm = contohUmkm,
                         onKembali = { nav.popBackStack() },
-                        onTersimpan = {
-                            katalogVm.muat() // Otomatis refresh daftar katalog agar produk baru dari REST API langsung tampil
-                            nav.popBackStack()
-                        },
-                        vm = viewModel { FormProdukViewModel(sumber) }
+                        // Tidak perlu muat ulang: produk baru langsung masuk database,
+                        // dan katalog ikut berubah sendiri lewat Flow
+                        onTersimpan = { nav.popBackStack() },
+                        vm = viewModel { FormProdukViewModel(sumber, draf) }
                     )
                 }
 
