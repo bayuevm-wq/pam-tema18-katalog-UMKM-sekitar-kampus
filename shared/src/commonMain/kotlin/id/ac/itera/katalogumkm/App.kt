@@ -62,8 +62,7 @@ fun App() {
                         NavigationBarItem(
                             selected = entry?.destination?.hasRoute(tab.rute::class) == true,
                             onClick = { pindahTab(nav, tab.rute) },
-                            icon = { Text(tab.label) },
-                            label = { Text(tab.label) }
+                            icon = { Text(tab.label) }
                         )
                     }
                 }
