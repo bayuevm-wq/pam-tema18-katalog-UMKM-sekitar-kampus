@@ -1,0 +1,20 @@
+-- Hanya ada SATU draf form tambah produk, jadi id selalu 1.
+-- harga dan stok disimpan sebagai TEXT karena di form masih berupa teks ketikan.
+CREATE TABLE DrafProduk (
+  id INTEGER NOT NULL PRIMARY KEY,
+  nama TEXT NOT NULL,
+  harga TEXT NOT NULL,
+  stok TEXT NOT NULL,
+  kategori TEXT NOT NULL,
+  umkmId INTEGER NOT NULL,
+  deskripsi TEXT NOT NULL
+);
+
+simpanDraf:
+INSERT OR REPLACE INTO DrafProduk VALUES (1, ?, ?, ?, ?, ?, ?);
+
+ambilDraf:
+SELECT * FROM DrafProduk WHERE id = 1;
+
+hapusDraf:
+DELETE FROM DrafProduk;
