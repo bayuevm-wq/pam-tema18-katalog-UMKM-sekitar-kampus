@@ -1,33 +1,111 @@
-package id.ac.itera.katalogumkm.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import id.ac.itera.katalogumkm.data.Sumber
-import id.ac.itera.katalogumkm.data.pesanUntuk
+package id.ac.itera.katalogumkm.data
+
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
+import id.ac.itera.katalogumkm.db.KatalogDb
+import id.ac.itera.katalogumkm.db.ProdukEntity
 import id.ac.itera.katalogumkm.model.Produk
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
-class KatalogViewModel(private val sumber: Sumber<Produk>) : ViewModel() {
+class SumberProdukOffline(
+    private val db: KatalogDb,
+    private val api: ProdukApi
+) : Sumber<Produk> {
 
-    private val _uiState = MutableStateFlow<KatalogUiState>(KatalogUiState.Memuat)
-    val uiState: StateFlow<KatalogUiState> = _uiState.asStateFlow()
+    private val q get() = db.produkQueries
 
-    init { muat() }
 
-    fun muat() {
-        viewModelScope.launch {
-            _uiState.value = KatalogUiState.Memuat
-            _uiState.value = try {
-                KatalogUiState.Berhasil(sumber.semua())
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                KatalogUiState.Gagal(pesanUntuk(e))
+    fun pantauSemua(): Flow<List<Produk>> =
+        q.semua()
+            .asFlow()
+            .mapToList(Dispatchers.Default)
+            .map { daftar -> daftar.map { it.keProduk() } }
+
+
+    suspend fun segarkan() {
+        val dariServer = api.semua()
+
+        withContext(Dispatchers.Default) {
+            db.transaction {
+                q.hapusSemua()
+                dariServer.forEach { simpanDto(it) }
             }
         }
     }
+
+
+    override suspend fun semua(): List<Produk> =
+        withContext(Dispatchers.Default) {
+            q.semua().executeAsList().map { it.keProduk() }
+        }
+
+
+    override suspend fun ambil(id: Int): Produk {
+        val lokal = withContext(Dispatchers.Default) {
+            q.byId(id.toLong()).executeAsOneOrNull()
+        }
+
+        if (lokal != null) return lokal.keProduk()
+
+        val dto = api.ambil(id)
+
+        withContext(Dispatchers.Default) {
+            simpanDto(dto)
+        }
+
+        return dto.keProduk()
+    }
+
+
+    override fun pantau(id: Int): Flow<Produk> =
+        q.byId(id.toLong())
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.Default)
+            .filterNotNull()
+            .map { it.keProduk() }
+
+
+    override suspend fun kirim(baru: Produk): Produk {
+        val dto = api.kirim(baru.keBaruDto())
+
+        withContext(Dispatchers.Default) {
+            simpanDto(dto)
+        }
+
+        return dto.keProduk()
+    }
+
+
+    private fun simpanDto(d: ProdukDto) = q.simpan(
+        id = d.id.toLong(),
+        nama = d.nama,
+        harga = d.harga,
+        kategori = d.kategori,
+        umkmId = d.umkmId.toLong(),
+        deskripsi = d.deskripsi,
+        fotoUrl = d.fotoUrl,
+        status = d.status,
+        stok = d.stok.toLong(),
+        estimasiHari = d.estimasiHari.toLong()
+    )
 }
+
+
+fun ProdukEntity.keProduk(): Produk = ProdukDto(
+    id = id.toInt(),
+    nama = nama,
+    harga = harga,
+    kategori = kategori,
+    umkmId = umkmId.toInt(),
+    deskripsi = deskripsi,
+    fotoUrl = fotoUrl,
+    status = status,
+    stok = stok.toInt(),
+    estimasiHari = estimasiHari.toInt()
+).keProduk()
