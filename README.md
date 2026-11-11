@@ -118,10 +118,10 @@ flowchart LR
 
 ### API yang dipakai
 
-Mock API buatan sendiri dengan \*\*my-json-server\*\*, membaca `db.json` di root repo ini.
+Mock API buatan sendiri dengan **mockapi.io**, resource `produk` berisi 12 produk contoh.
 
-- Base URL: `https://my-json-server.typicode.com/bayuevm-wq/pam-tema18-katalog-UMKM-sekitar-kampus`
-- Disimpan di satu konstanta `BASE\_URL` (`data/Jaringan.kt`)
+- Base URL: `https://6af0821911a6aa866e7f89f0.mockapi.io/api/v1`
+- Disimpan di satu konstanta `BASE_URL` (`data/Jaringan.kt`)
 
 | Method | Endpoint | Kegunaan |
 |---|---|---|
@@ -129,7 +129,7 @@ Mock API buatan sendiri dengan \*\*my-json-server\*\*, membaca `db.json` di root
 | GET | `/produk/{id}` | Satu produk (layar Detail) |
 | POST | `/produk` | Tambah produk (layar Form) |
 
-Catatan: POST di my-json-server hanya disimulasikan (tidak tersimpan permanen), jadi produk baru diingat di memori selama aplikasi terbuka.
+Catatan: my-json-server (membaca `db.json` di root repo) sempat dicoba, tetapi layanannya tidak bisa dijangkau, sehingga kelompok pindah ke mockapi.io. Di mockapi.io, POST benar-benar tersimpan di server.
 
 | No | Yang diselesaikan | Dikerjakan oleh | Status |
 |----|-------------------|-----------------|--------|
