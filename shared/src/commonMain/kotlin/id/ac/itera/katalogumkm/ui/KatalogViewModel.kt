@@ -1,111 +1,47 @@
+package id.ac.itera.katalogumkm.ui
 
-package id.ac.itera.katalogumkm.data
-
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOneOrNull
-import id.ac.itera.katalogumkm.db.KatalogDb
-import id.ac.itera.katalogumkm.db.ProdukEntity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import id.ac.itera.katalogumkm.data.SumberProdukOffline
 import id.ac.itera.katalogumkm.model.Produk
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class SumberProdukOffline(
-    private val db: KatalogDb,
-    private val api: ProdukApi
-) : Sumber<Produk> {
+class KatalogViewModel(private val sumber: SumberProdukOffline) : ViewModel() {
 
-    private val q get() = db.produkQueries
+    // Daftar SELALU dari database. Berubah sendiri setiap kali tabel berubah.
+    val produk: StateFlow<List<Produk>> = sumber.pantauSemua()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    // Hasil segarkan: null kalau berhasil, berisi teks kalau offline
+    private val _pesan = MutableStateFlow<String?>(null)
+    val pesan: StateFlow<String?> = _pesan.asStateFlow()
 
-    fun pantauSemua(): Flow<List<Produk>> =
-        q.semua()
-            .asFlow()
-            .mapToList(Dispatchers.Default)
-            .map { daftar -> daftar.map { it.keProduk() } }
+    // true selama sedang mengambil dari server (untuk spinner di pemakaian pertama)
+    private val _menyegarkan = MutableStateFlow(false)
+    val menyegarkan: StateFlow<Boolean> = _menyegarkan.asStateFlow()
 
+    init { segarkan() }
 
-    suspend fun segarkan() {
-        val dariServer = api.semua()
-
-        withContext(Dispatchers.Default) {
-            db.transaction {
-                q.hapusSemua()
-                dariServer.forEach { simpanDto(it) }
+    // Dipanggil saat dibuka dan oleh tombol "Coba lagi"
+    fun segarkan() {
+        viewModelScope.launch {
+            _menyegarkan.value = true
+            try {
+                sumber.segarkan()
+                _pesan.value = null
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _pesan.value = "Offline. Menampilkan data terakhir."
+            } finally {
+                _menyegarkan.value = false
             }
         }
     }
-
-
-    override suspend fun semua(): List<Produk> =
-        withContext(Dispatchers.Default) {
-            q.semua().executeAsList().map { it.keProduk() }
-        }
-
-
-    override suspend fun ambil(id: Int): Produk {
-        val lokal = withContext(Dispatchers.Default) {
-            q.byId(id.toLong()).executeAsOneOrNull()
-        }
-
-        if (lokal != null) return lokal.keProduk()
-
-        val dto = api.ambil(id)
-
-        withContext(Dispatchers.Default) {
-            simpanDto(dto)
-        }
-
-        return dto.keProduk()
-    }
-
-
-    override fun pantau(id: Int): Flow<Produk> =
-        q.byId(id.toLong())
-            .asFlow()
-            .mapToOneOrNull(Dispatchers.Default)
-            .filterNotNull()
-            .map { it.keProduk() }
-
-
-    override suspend fun kirim(baru: Produk): Produk {
-        val dto = api.kirim(baru.keBaruDto())
-
-        withContext(Dispatchers.Default) {
-            simpanDto(dto)
-        }
-
-        return dto.keProduk()
-    }
-
-
-    private fun simpanDto(d: ProdukDto) = q.simpan(
-        id = d.id.toLong(),
-        nama = d.nama,
-        harga = d.harga,
-        kategori = d.kategori,
-        umkmId = d.umkmId.toLong(),
-        deskripsi = d.deskripsi,
-        fotoUrl = d.fotoUrl,
-        status = d.status,
-        stok = d.stok.toLong(),
-        estimasiHari = d.estimasiHari.toLong()
-    )
 }
-
-
-fun ProdukEntity.keProduk(): Produk = ProdukDto(
-    id = id.toInt(),
-    nama = nama,
-    harga = harga,
-    kategori = kategori,
-    umkmId = umkmId.toInt(),
-    deskripsi = deskripsi,
-    fotoUrl = fotoUrl,
-    status = status,
-    stok = stok.toInt(),
-    estimasiHari = estimasiHari.toInt()
-).keProduk()
