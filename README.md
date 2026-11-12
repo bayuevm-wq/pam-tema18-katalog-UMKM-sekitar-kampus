@@ -144,6 +144,38 @@ Catatan: my-json-server (membaca `db.json` di root repo) sempat dicoba, tetapi l
 | ![Memuat](docs/cp6-memuat.png) | ![Gagal](docs/cp6-gagal.png) | ![Berhasil](docs/cp6-berhasil.png) |
 
 
+## Checkpoint Minggu 7
+
+### Alur offline-first
+
+Aplikasi memakai **SQLDelight** sebagai penyimpanan lokal. Database SQLite di HP menjadi **satu sumber kebenaran**:
+
+1. Layar katalog **selalu membaca database** lewat Flow (`asFlow()` + `mapToList`), bukan langsung dari jaringan.
+2. Saat dibuka, `segarkan()` mengambil produk dari mockapi **dulu**, lalu menghapus dan menyimpan ulang isi tabel di dalam satu **transaction**.
+3. Kalau offline, `segarkan()` gagal **sebelum** database disentuh, jadi daftar terakhir tetap tampil dengan pesan kecil "Offline. Menampilkan data terakhir."
+4. Produk baru dari form dikirim ke mockapi lalu langsung disimpan ke database, sehingga katalog berubah sendiri.
+5. Isi form tambah produk disimpan otomatis ke tabel `DrafProduk` (dengan `debounce(500)`), dibaca kembali saat form dibuka, dan dihapus setelah produk berhasil tersimpan.
+
+| Bagian | Berkas |
+|---|---|
+| Skema | `commonMain/sqldelight/.../db/Produk.sq`, `Draf.sq` |
+| Driver per platform | `DriverFactory` (expect) + actual di `androidMain`, `iosMain`, `jvmMain` (desktop memakai berkas) |
+| Sumber offline | `data/SumberProdukOffline.kt` (`pantauSemua`, `segarkan`) |
+| Draf form | `data/PenyimpananDraf.kt`, `ui/FormProdukViewModel.kt` |
+
+| No | Yang diselesaikan | Dikerjakan oleh | Status |
+|----|-------------------|-----------------|--------|
+| 1 | Dependency SQLDelight, Produk.sq, DriverFactory 3 platform, App(driverFactory) | Bayu | Selesai |
+| 2 | SumberProdukOffline (pantauSemua, segarkan), KatalogViewModel, KatalogScreen | Arbani | Selesai |
+| 3 | Draf.sq, PenyimpananDraf, draf di FormProdukViewModel, README | Natan | Selesai |
+
+### Tangkapan layar
+
+| Mode pesawat: daftar tetap tampil | Draf kembali setelah aplikasi dibuka ulang |
+|---|---|
+| ![Offline](docs/cp7-offline.png) | ![Draf](docs/cp7-draf.png) |
+
+
 
 
 ##  Mata Kuliah
